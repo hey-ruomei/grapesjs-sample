@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>GrapesJSのサンプル</title>
+    
+    <link rel="stylesheet" href="https://unpkg.com/grapesjs/dist/css/grapes.min.css">
+    <script src="https://unpkg.com/grapesjs"></script>
+  </head>
+  <body>
+    
+    <!-- ここにGrapesJSのエディタが表示される -->
+    <div id="gjs"></div>
+    
+    
+  <script>
+    //GrapesJSの初期化処理
+    var editor = grapesjs.init({
+      container : '#gjs',
+      components: '<h1 class="text-red">こんにちは！GrapesJS...</h1>',
+      style: '.text-red{ color: red }',
+    });
+
+    
+    var blockManager = editor.BlockManager;
+    var panelManager = editor.Panels;
+    var commands = editor.Commands;
+
+
+    //ブロックコンテンツの作成
+    //
+    //label: ブロックメニューに表示されるテキスト
+    //content: 実際のHTMLソース
+    //attributes: ブロックをマウスオーバーした時のツールチップ表示
+    blockManager.add('h1-block', {
+      label: 'Heading',
+      content: '<h1>ここにテキストを入力…</h1>',
+      attributes: {
+        title: 'h1ブロックの挿入'
+      }
+    });
+
+
+    //UIのカスタマイズ
+    //
+    //id: 複数のUIを区別するために必要
+    //className: Font Awesomeベースの記述でアイコンが表示される
+    //command: 機能を組み込むためのID名
+    panelManager.addPanel({
+      id: 'myNewPanel',
+      visible    : true,
+      
+      buttons    : [{
+        id          : 'smile',
+        className   : 'fa fa-smile-o',
+        attributes  : { title: 'Smile' },
+        command     : 'helloWorld',
+      }],
+    });
+
+    
+    //機能を組み込む
+    //
+    //run: 関数内に独自のプログラムを記述することでUIと紐付ける
+    commands.add('helloWorld', {
+      run:  function(editor, sender){
+        alert('Hello world!');
+      }
+    });
+  </script>
+
+  </body>
+</html>
